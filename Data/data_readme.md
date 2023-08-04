@@ -11,3 +11,6 @@ Kinematic data is preprocessed and aligned to behavioral data. Only trials in CU
 
 
 ## Ephys Data (Fig 4, Fig 5)
+
+Trial averaged ephys data is uploaded here:
+Individual sessions (with spike times, trials, and kinematics) are uploaded here: 
