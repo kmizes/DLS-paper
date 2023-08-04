@@ -7,7 +7,7 @@ Files are matlab structures. Each element in the array is a separate session, wi
 
 ## Kinematic data (Fig 6, Fig 7)
 
-Kinematic data is preprocessed and aligned to behavioral data. For raw data across all recorded trials, please contact corresponding author.
+Kinematic data is preprocessed and aligned to behavioral data. Only trials in CUE and WM that match the automatic sequence are selected. For raw data across all recorded trials and different sequences, please contact corresponding author.
 
 
 ## Ephys Data (Fig 4, Fig 5)
