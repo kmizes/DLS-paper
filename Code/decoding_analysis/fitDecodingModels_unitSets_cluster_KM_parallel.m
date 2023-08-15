@@ -5,7 +5,6 @@ function fitDecodingModels_unitSets_cluster_KM_parallel(sss)
 %% paths and files to load
 addpath(genpath('encodingModels'))
 addpath('Utilities');
-addpath('HelperFunctions');
 
 
 %% load single session 
