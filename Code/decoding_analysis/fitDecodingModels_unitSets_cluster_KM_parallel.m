@@ -10,9 +10,9 @@ addpath('HelperFunctions');
 
 %% load single session 
 % good session, lots of units
-load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\84.mat')
+% load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\84.mat')
 % % lots of units, OT only
-load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\87.mat')
+% load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\87.mat')
 
 %% loop over sessions
 % these files are large and hosted elsewhere
