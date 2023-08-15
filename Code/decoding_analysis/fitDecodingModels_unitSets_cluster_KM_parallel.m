@@ -1,28 +1,4 @@
-
-
-% i've done encoding, onto decoding?
-
-
-
-% get unit count
-% fpath = 'D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality';
-% fpath = 'D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat33\ratBehUnitTrajSess_quality';
-% fpath = 'D:\Kevin\Sequence_tap\EphysE8_output\Results-EphysE8-Rat45\ratBehUnitTrajSess';
-% fnames = dir([fpath '\*.mat']);
-% 
-% unitCount = [];
-% for s = 1:length(fnames)
-%     a = fnames(s).name;
-%     a = strsplit(a,'.');
-%     ss = str2num(a{1});
-%     load(fullfile(fpath, fnames(s).name));
-%     disp(ss);
-%     
-%     if ~isempty(ratBehUnitTrajStructSess.spikeTimes)
-%     unitCount(ss) = sum(cellfun(@length,ratBehUnitTrajStructSess.spikeTimes) > 10);
-%     end
-%     
-% end
+%% script of decoding analysis 
 
 function fitDecodingModels_unitSets_cluster_KM_parallel(sss)
 
@@ -31,38 +7,8 @@ addpath(genpath('/n/holylfs02/LABS/olveczky_lab/Kevin/Analysis/encodingModels'))
 addpath('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/Utilities');
 addpath('../HelperFunctions');
 
-% addpath(genpath('D:\Kevin\Sequence_tap_analysis\basic_beh_ephys_analysis\encodingModels'))
-% 
-% cd('D:\Kevin\Sequence_tap_analysis\basic_beh_ephys_analysis\decodingModels');
-% % good session, lots of units
-%  load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\84.mat')
-% % lots of units, OT only
-%  load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\87.mat')
-% 
-% 
-%  load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBEHstruct.mat')
  
 %% loop over sessions
-
-
-% % 
-% files = dir(['D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\*.mat']);
-% load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\unitCount.mat')
-% load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBEHstruct.mat')
-% % 
-% files = dir('D:\Kevin\Sequence_tap\EphysE8_output\Results-EphysE8-Rat45\ratBehUnitTrajSess\*.mat');
-% load('D:\Kevin\Sequence_tap\EphysE8_output\Results-EphysE8-Rat45\unitCount.mat')
-% load('D:\Kevin\Sequence_tap\EphysE8_output\Results-EphysE8-Rat45\ratBEHstruct.mat')
-
-%ratname = 'EphysE7-Rat47';
-%fpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/ratBehUnitTrajSess_quality/';
-%files = dir('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/ratBehUnitTrajSess_quality/*.mat');
-%load('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/unitCount.mat')
-%load('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/ratBEHstruct.mat')
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/decoding_paws_nose_10_20_lag_new/';
-%if ~exist(savepath); mkdir(savepath); end
-%loadpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat47/day_matches.mat';
-%load(loadpath);
 
 
 ratname = 'EphysE7-Rat33';
@@ -71,37 +17,6 @@ load('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/ratBEHst
 fpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/ratBehUnitTrajSess/';
 extrinsicpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/';
 
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_10_20_lag_new/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_scaleattempt/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_treeattempt/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_bignnattempt/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_control/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_inversescaleattempt/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_onlymod/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_control_moreunits/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_shuffled/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_uMod_nosesscombined/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_uMod_nosesscombined_SVR/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_nosesscombined_SVR/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_nosesscombined_morespikebins/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_stricterunittoss/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_stricterunittoss_nosesscombined/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_stricterunittoss_nosesscombined_SVR/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_nosesscombined/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_nosesscombined_stricterunittoss/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_subseq/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_shuffle/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_shuffle_allunits/'
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_allunits/';
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_nosesscombined_allunits_egocentric/';
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_allunits_egocentric/';
-
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_allunits_withphase/';
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_3d/';
-%savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_3dpaws/';
 savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_3dpaws_and_nose/';
 
 if ~exist(savepath); mkdir(savepath); end
