@@ -3,27 +3,32 @@
 function fitDecodingModels_unitSets_cluster_KM_parallel(sss)
 
 %% paths and files to load
-addpath(genpath('/n/holylfs02/LABS/olveczky_lab/Kevin/Analysis/encodingModels'))
-addpath('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/Utilities');
-addpath('../HelperFunctions');
+addpath(genpath('encodingModels'))
+addpath('Utilities');
+addpath('HelperFunctions');
 
- 
+
+%% load single session 
+% good session, lots of units
+load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\84.mat')
+% % lots of units, OT only
+load('D:\Kevin\Sequence_tap\EphysE7_output\Results-EphysE7-Rat47\ratBehUnitTrajSess_quality\87.mat')
+
 %% loop over sessions
-
+% these files are large and hosted elsewhere
 
 ratname = 'EphysE7-Rat33';
 files = dir('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/ratBehUnitTrajSess/*.mat');
 load('/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/ratBEHstruct.mat')
 fpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/ratBehUnitTrajSess/';
+
 extrinsicpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/';
 
-savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose_morespikebins_mediumunittoss_nosesscombined_3dpaws_and_nose/';
+savepath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/decoding_paws_nose3dpaws_and_nose/';
 
 if ~exist(savepath); mkdir(savepath); end
 loadpath = '/n/holylfs02/LABS/olveczky_lab/Kevin/Video/Tracking/EphysE7-Rat33/day_matches.mat';
 load(loadpath);
-
-% dont forget to rerun for rat 35 without seq subset!
 
 doscale = 0;
 douMod = 0;
@@ -45,32 +50,6 @@ unitsPerGrp = [4,8,12,15]; % ??
 unitsPerGrp = [12]; % run quicker for check
 %unitsPerGrp = [20];
 %% variables to save
-% R2_pos_paws = cell(size(files));
-% R2_vel_paws = cell(size(files)); % test x train
-% R2_pos_nose = cell(size(files));
-% R2_vel_nose = cell(size(files));
-% num_units = cell(size(files));% track units using
-% R2_phase = cell(size(files));
-% R2_taps = cell(size(files));
-% R2_vel_paws_lag = cell(size(files,1), length(tuse)); % 11 hard coded...
-% R2_paws_lag = cell(size(files,1),length(tuse));
-% y_pred_pos = cell(size(files,1),2);  % save y_predictions for a figure?
-% y_pred_vel = cell(size(files,1),2);
-% R2_pos = cell(size(files));
-% R2_vel = cell(size(files));
-% 
-% R2_pos_paws20 = cell(size(files));
-% R2_vel_paws20 = cell(size(files)); % test x train
-% R2_pos_nose20 = cell(size(files));
-% R2_vel_nose20 = cell(size(files));
-% num_units20 = cell(size(files));% track units using
-% R2_phase20 = cell(size(files));
-% R2_taps20 = cell(size(files));
-% R2_vel_paws_lag20 = cell(size(files,1),length(tuse));
-% R2_paws_lag20 = cell(size(files,1),length(tuse));
-% y_pred_pos20 = cell(size(files,1),2);  % save y_predictions for a figure?
-% y_pred_vel20 = cell(size(files,1),2);
-
 R2_ego = cell(size(files,1));
 
 R2_pos_paws = cell(size(files,1),length(unitsPerGrp));
@@ -97,33 +76,6 @@ R2_lag = cell(size(files,1),length(tuse),length(unitsPerGrp));
 grpReps = 20;
 
 %unitsPerGrp = [4,8,12,15]; % ??
-
-
-% parallelize by splitting into sessions?
-%%
-% %for sss = 1:length(files)
-% %     sess = files(sss).name;
-% %     sess = strsplit(sess,'.'); sess = str2num(sess{1});
-% %     try
-% %         load(fullfile(files(sss).folder,files(sss).name));
-% %     catch
-% %         return;
-% %    end
-%     % other way loading
-%     sess = sss;
-%     try
-%         load([fpath num2str(sess) '.mat']);
-%     catch
-%         return
-%     end
-%     
-%     
-%     disp(sess)
-%     if ratBehUnitTrajStructSess.protocol==8; return; end
-%     if unitCount(sess) < 5; return; end
-%     if isempty(ratBehUnitTrajStructSess(1).trajMaster); return; end
-%     if isempty(ratBehUnitTrajStructSess(1).trajSlave1); return; end
-%     if isempty(ratBehUnitTrajStructSess(1).trajSlave2); return; end
 
 %% load sessCat
 load(loadpath); % load day matches
@@ -405,21 +357,6 @@ for trial = 1:length(ratBehUnitTrajStructSess(s).Hit)
        if any(cellfun(@isempty, paws(:,count))); continue; end
 
 
-       % check that trajectory length will be the same as sampling
-       % spike times!
-
-       % problem is frame variance in trajectories.
-       % - should just interpolate to edges length?
-
-       % step 1) fill in nans for bad probs below thresh?
-       % - done above
-       % - what about trials with many nans at start of sequence?
-       % how to interpolate over that?
-       % step 1.5) note badly marked points?
-       % - if body part not well tracked, do not include in
-       % analysis?
-       % step 2) interpolate to length of edges
-
        for cid = 1:length(joints)*2
            % cound fraction bad
            badtrackfrac(cid,count) = sum(isnan(paws{cid,count})) / length(paws{cid,count});
@@ -434,15 +371,6 @@ for trial = 1:length(ratBehUnitTrajStructSess(s).Hit)
        end
 
 
-
-       % * old remove
-       % lengths can be different depending on exact spacing of
-       % sampling. if so, add on extra bin at end of edges
-%                if length(paws{1,count}) == length(edges)
-%                    edges = [edges edges(end)+binsize];
-%                else
-%                    
-%                end
 
         if count==50; 
             disp('here')
@@ -827,7 +755,7 @@ catch
 useTapsFlag = 0;
 end
 
-%% add in weird tap thing that I think makes no sense
+%%  egocentric decoding analysis that got scrapped
 X_ego = {};
 for t = 1:length(tapTimes)
     X_ego{t,1} = zeros(length(X{t,1}),1);
