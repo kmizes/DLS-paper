@@ -92,7 +92,6 @@ sBi = [957, 984];
 elseif strcmp(ratBEHstruct(1).name, 'J1-Rat71')
 sMock = [757, 785];
 sUni = [930, 957];
-sUni = [930-8,957];
 sBi = [1133, 1164];
 
 % j4 rat 76
